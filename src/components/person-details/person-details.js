@@ -1,22 +1,24 @@
-import React, { Component } from "react";
-import SwapiService from "../../services/swapi-service";
+import React, { Component } from 'react';
 
-import "./person-details.css";
+import './person-details.css';
+import SwapiService from "../../services/swapi-service";
+import ErrorButton from "../error-button/error-button";
 
 export default class PersonDetails extends Component {
+
   swapiService = new SwapiService();
 
   state = {
-    person: null,
+    person: null
   };
 
   componentDidMount() {
     this.updatePerson();
   }
 
-  componentDidUpdate(prevProps){
-    if (this.props.personId != prevProps.personId){
-      this.updatePerson()
+  componentDidUpdate(prevProps) {
+    if (this.props.personId !== prevProps.personId) {
+      this.updatePerson();
     }
   }
 
@@ -25,25 +27,29 @@ export default class PersonDetails extends Component {
     if (!personId) {
       return;
     }
-    this.swapiService.getPerson(personId).then((person) => {
-      this.setState({ person });
-    });
+
+    this.swapiService
+      .getPerson(personId)
+      .then((person) => {
+        this.setState({ person });
+      });
   }
 
   render() {
 
-    if (!this.state.person) {
-      return <span>Select a person from a list</span>
+    const { person } = this.state;
+    if (!person) {
+      return <span>Select a person from a list</span>;
     }
 
-    const {id, name, gender, birthYear, eyeColor} = this.state.person
+    const { id, name, gender,
+              birthYear, eyeColor } = person;
 
     return (
       <div className="person-details card">
-        <img
-          className="person-image"
+        <img className="person-image"
           src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-        />
+          alt="character"/>
 
         <div className="card-body">
           <h4>{name}</h4>
@@ -61,8 +67,9 @@ export default class PersonDetails extends Component {
               <span>{eyeColor}</span>
             </li>
           </ul>
+          <ErrorButton />
         </div>
       </div>
-    );
+    )
   }
 }
