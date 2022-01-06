@@ -24,18 +24,11 @@ export default class RandomPlanet extends Component {
     clearInterval(this.interval);
   }
 
-  onPlanetLoaded = (planet) => {
+  onPlanetLoaded = (planetObj) => {
     this.setState({
-      planet,
+      planet: planetObj.data,
       loading: false,
-      error: false
-    });
-  };
-
-  onError = (err) => {
-    this.setState({
-      error: true,
-      loading: false
+      error: planetObj.isError
     });
   };
 
@@ -44,7 +37,7 @@ export default class RandomPlanet extends Component {
     this.swapiService
       .getPlanet(id)
       .then(this.onPlanetLoaded)
-      .catch(this.onError);
+      
   };
 
   render() {
