@@ -41,10 +41,10 @@ export default class ItemDetails extends Component {
     }
 
     getData(itemId)
-      .then((item) => {
+      .then((resObj) => {
         this.setState({
-          item,
-          image: getImageUrl(item)
+          item: resObj.data,
+          image: getImageUrl(resObj.data)
         });
       });
   }
