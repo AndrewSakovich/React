@@ -83,15 +83,18 @@ export default class SwapiService {
     };
   };
 
-  getPersonImage = ({id}) => {
+  getPersonImage = (item) => {
+    const id = item?.id
     return `${this._imageBase}/characters/${id}.jpg`
   };
 
-  getStarshipImage = ({id}) => {
+  getStarshipImage = (item) => {
+    const id = item?.id
     return `${this._imageBase}/starships/${id}.jpg`
   };
 
-  getPlanetImage = ({id}) => {
+  getPlanetImage = (item) => {
+    const id = item?.id
     return `${this._imageBase}/planets/${id}.jpg`
   };
 

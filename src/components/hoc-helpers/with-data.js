@@ -7,18 +7,24 @@ const withData = (View, getData) => {
   return class extends Component {
     state = {
       data: null,
+      isError: false
     };
 
     componentDidMount() {
       getData().then((dataObj) => {
         this.setState({
           data: dataObj.data,
+          isError: dataObj.isError
         });
       });
     }
 
     render() {
-      const { data } = this.state;
+      const { data, isError } = this.state;
+
+      if(isError) {
+        return <ErrorIndicator/>
+      }
 
       if (!data) {
         return <Spinner />;

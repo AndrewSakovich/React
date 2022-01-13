@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ErrorButton from '../error-button/error-button';
+import ErrorIndicator from '../error-indicator';
 
 import './item-details.css';
 
@@ -21,7 +22,9 @@ export default class ItemDetails extends Component {
 
   state = {
     item: null,
-    image: null
+    image: null,
+    isError: false
+
   };
 
   componentDidMount() {
@@ -44,14 +47,19 @@ export default class ItemDetails extends Component {
       .then((resObj) => {
         this.setState({
           item: resObj.data,
-          image: getImageUrl(resObj.data)
+          image: getImageUrl(resObj.data),
+          isError: resObj.isError
         });
       });
   }
 
   render() {
+    const { item, image, isError } = this.state;
 
-    const { item, image } = this.state;
+    if (isError) {
+      return <ErrorIndicator/>
+    }
+
     if (!item) {
       return <span>Select a item from a list</span>;
     }
